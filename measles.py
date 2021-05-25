@@ -58,7 +58,7 @@ n = 10000
 # First we simulate who has measles and who does not.
 # Using p_measles, randomly initialize the has_measles array.
 # (assignment to has_measles)
-
+has_measles = np.random.choice(a=[True,False], size=n, p=[p_measles,1-p_measles ])
 
 # Check the values in has_measles.
 # bincount() is similar to Pandas's value_counts(), but for NumPy arrays.
@@ -67,7 +67,7 @@ print('Problem 1: ', np.bincount(has_measles))
 #@ 2
 # Set the value of num_measles to the number of True values in has_measles.
 # (assignment to num_measles)
-
+num_measles = np.sum(has_measles)
 
 # check the answer
 print('Problem 2: {}'.format(num_measles))
@@ -75,7 +75,7 @@ print('Problem 2: {}'.format(num_measles))
 #@ 3
 # Initialize the tests_positive array to all False values
 # (assignment to tests_positive)
-
+tests_positive = np.full(shape=n,fill_value=False)
 
 #@ 4
 # Now we simulate, for the people with measles, whether they test
