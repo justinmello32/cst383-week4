@@ -173,7 +173,3 @@ print('Problem 12, test 1: {:.4f}'.format(p_measles_if_pos(0.01, 0.98, 0.02)))
 
 # test the function on another case
 print('Problem 12, test 2: {:.4f}'.format(p_measles_if_pos(0.01, 0.95, 0.90)))
-
-
-
-
