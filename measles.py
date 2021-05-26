@@ -75,7 +75,7 @@ print('Problem 2: {}'.format(num_measles))
 #@ 3
 # Initialize the tests_positive array to all False values
 # (assignment to tests_positive)
-tests_positive = np.full(shape=n,fill_value=False)
+tests_positive = np.full(shape=n, fill_value=False)
 
 #@ 4
 # Now we simulate, for the people with measles, whether they test
@@ -86,7 +86,7 @@ tests_positive = np.full(shape=n,fill_value=False)
 # tests_positive to True if they correspond to elements in has_measles
 # that are True.
 # (update tests_positive)
-
+tests_positive[has_measles] = np.random.choice([True, False], size=num_measles, p=[p_pos_if_measles, 1-p_pos_if_measles])
 
 # Check the answer
 print('Problem 4: ', np.bincount(tests_positive))
@@ -97,7 +97,7 @@ print('Problem 4: ', np.bincount(tests_positive))
 # Using p_pos_if_okay, randomly initialize the values of tests_positive
 # for people without measles.
 # (update tests_positive)
-
+tests_positive[~has_measles] = np.random.choice([True, False], size=n-num_measles, p=[p_pos_if_okay, 1-p_pos_if_okay])
 
 # Compute a confusion matrix using Pandas crosstab()
 # use pandas crosstab 
@@ -107,36 +107,39 @@ print('Problem 5:\n', pd.crosstab(has_measles, tests_positive))
 # Using the has_measles and tests_positive arrays, compute the probability 
 # that a person has measles given positive test results.
 # (expression)
-
+np.sum(tests_positive[has_measles]) / np.sum(tests_positive)
 
 #@ 7
 # Using the has_measles and tests_positive arrays, compute the probability 
 # that a person has does not have measles given negative test results.
 # (expression)
-
+np.sum(~tests_positive[~has_measles]) / np.sum(~tests_positive)
 
 #@ 8
 # Using the has_measles and tests_positive arrays, compute the probability 
 # that a person has measles given negative test results.
 # (expression)
-
+np.sum(~tests_positive[has_measles]) / np.sum(~tests_positive)
 
 #@ 9
 # Create a data frame with two columns:
 # 'measles', which will contain the values in the has_measles array
 # 'tests_positive', which will contain the values in the tests_positive array
 # (assignment to df)
-
+df = pd.DataFrame({'measles': has_measles, 'tests_positive': tests_positive })
 
 # Create a grouped bar plot showing the number of people with or
 # without measles, and the results of their tests.
-pd.crosstab(df['measles'], df['tests_positive']).plot.bar()
+
 
 #@ 10
 # Take your answers above and create a function that will perform the simulation
 # and return the estimated probability that a person has measles given
 # positive test results
 # (define a function)
+def sim_p_measles_if_pos(x,y,z):
+  result = 0
+  return result
 
 
 # test the function on the question at the top of the assignment
@@ -155,14 +158,15 @@ print('Problem 10, test 2: {:.4f}'.format(sim_p_measles_if_pos(0.01, 0.95, 0.90)
 # that their test is positive.
 # Use p_measles, p_pos_if_measles, and p_pos_if_okay to compute your answer.
 # (expression)
-
+p_pos_if_measles * p_measles / (p_pos_if_measles*p_measles + p_pos_if_okay*(1-p_measles))
 
 #@ 12
 # Take your code that uses Bayes' Law and create a function that will 
 # compute the probability that a person has measles given they their
 # test is positive.
 # (define a function)
-
+def p_measles_if_pos(p_measles, p_pos_if_measles, p_pos_if_okay):
+  return p_pos_if_measles * p_measles / (p_pos_if_measles*p_measles + p_pos_if_okay*(1-p_measles))
 
 # test the function on the question at the top of the assignment
 print('Problem 12, test 1: {:.4f}'.format(p_measles_if_pos(0.01, 0.98, 0.02)))
